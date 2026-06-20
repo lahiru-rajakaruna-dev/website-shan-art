@@ -2,15 +2,15 @@ import type { ParentProps } from "solid-js";
 
 export default function ExamplesSection() {
   return (
-    <section>
-      <div class="w-full h-fit min-h-screen p-4">
-        <h2 class="mb-16 text-3xl">Some of our work</h2>
+    <section class="">
+      <div class="w-full h-fit min-h-screen p-4 bg-black text-white">
+        <h2 class="mb-16 text-3xl font-bold">Some of our work</h2>
         <input
           type="search"
           name="service_search_input"
           id="input_service-search"
           placeholder="Search for work"
-          class="w-full h-fit px-3 py-2 mb-4 rounded-md border border-gray-100"
+          class="w-full h-fit px-3 py-2 mb-4 rounded-md bg-white text-black border-2 border-red-500"
         />
         <ExampleList>
           <ExampleList.ExampleCard
@@ -57,7 +57,7 @@ function ExampleCard(props: {
 }) {
   return (
     <li class="mb-4 break-inside-avoid">
-      <article class="w-full h-fit p-1 flex flex-col items-stretch justify-start border border-red-200 rounded-md overflow-hidden shadow-sm">
+      <article class="w-full h-fit p-1 flex flex-col items-stretch justify-start bg-white text-black border-2 border-red-200 rounded-md overflow-hidden shadow-sm">
         <img
           src={props.imageUrl}
           alt={`Shan art adverising work example for ${props.serviceName}`}
@@ -65,7 +65,7 @@ function ExampleCard(props: {
         />
         <div class="p-2">
           <h3 class="mb-1 text-xl font-bold">Light Board</h3>
-          <p class="mb-1 line-clamp-6">{props.description}</p>
+          <p class="mb-1 line-clamp-2">{props.description}</p>
           <p class="text-right">{props.serviceArea}</p>
         </div>
         <button class="btn btn-outline">View Images</button>

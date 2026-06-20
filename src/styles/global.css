@@ -6,9 +6,14 @@ section:not(:first-child) {
 }
 
 
-
 @media (max-width:768px) {
     :root {
         font-size: 18px;
     }
+}
+
+#hero_section_bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(to top, hsl(260, 1%, 90%) 0% 20%, hsl(260, 1%, 94%) 23% 25%, hsl(260, 1%, 98%) 30% 100%);
 }
