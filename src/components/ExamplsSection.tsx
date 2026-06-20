@@ -57,25 +57,24 @@ function ExampleCard(props: {
 }) {
   return (
     <li class="mb-4 break-inside-avoid">
-      <article class="w-full h-fit p-1 flex flex-col items-stretch justify-start bg-white text-black border-2 border-red-200 rounded-md overflow-hidden shadow-sm">
+      <article tabIndex={1} class="relative w-full min-h-50 mh:h-screen lg:h-[400px] group/example-card focus:bg-red-500 p-1 flex flex-row items-stretch justify-start bg-white text-black rounded-md overflow-hidden shadow-sm">
         <img
           src={props.imageUrl}
           alt={`Shan art adverising work example for ${props.serviceName}`}
-          class="aspect-square w-full h-auto bg-gray-500"
+          class="flex-1 aspect-square w-full h-full bg-gray-0 rounded-md"
         />
-        <div class="p-2">
-          <h3 class="mb-1 text-xl font-bold">Light Board</h3>
+        <div class="absolute left-0 right-0 bottom-0 group-focus/example-card:-translate-y-0 translate-y-full h-7/12 bg-linear-0 from-blue-950 to-transparent flex flex-col items-stretch justify-end p-4 text-white transform-gpu transition-transform duration-500">
+          <h3 class="mb-1 text-lg font-bold">Light Board</h3>
           <p class="mb-1 line-clamp-2">{props.description}</p>
           <p class="text-right">{props.serviceArea}</p>
         </div>
-        <button class="btn btn-outline">View Images</button>
       </article>
     </li>
   );
 }
 
 function ExampleList(props: ParentProps) {
-  return <ul class="w-full h-fit columns-2">{props.children}</ul>;
+  return <ul class="w-full h-fit mh:min-h-screen flex flex-col items-stretch justify-start gap-3">{props.children}</ul>;
 }
 
 ExampleList.ExampleCard = ExampleCard;

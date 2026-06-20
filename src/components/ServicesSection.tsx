@@ -30,13 +30,15 @@ export default function ServicesSection() {
 function ServiceCard(props: { imageUrl: string; serviceName: string }) {
   return (
     <li>
-      <article class="w-full h-fit mb-2 p-2 bg-white border-0 border-red-200 rounded-md shadow-sm hover:bg-red-200 group/service-card overflow-y-visible transition-colors duration-500">
+      <article class="relative w-full h-fit mb-2 p-2 bg-white text-black border-0 border-red-200 rounded-md shadow-sm hover:bg-red-200 overflow-hidden group/service-card overflow-y-visible transition-colors duration-500">
         <img
           src={props.imageUrl}
           alt={`shan art advertising service ${props.serviceName}`}
           class="aspect-square w-full h-auto mb-2 bg-gray-100 rounded-sm group-hover/service-card:-translate-y-6 group-hover/service-card:shadow-lg transform-gpu transition-all duration-500"
         />
-        <p>Banner Design</p>
+        <div class="absolute left-0 right-0 bottom-0 w-full h-11/12 p-2 flex flex-col items-start justify-end text-white bg-linear-0 from-blue-950 via-blue-900 via-20% to-transparent to-90%">
+          <p class="font-bold">Banner Design</p>
+        </div>
       </article>
     </li>
   );
@@ -44,7 +46,7 @@ function ServiceCard(props: { imageUrl: string; serviceName: string }) {
 
 function ServiceList(props: ParentProps) {
   return (
-    <ul class="w-full h-fit grid grid-cols-2 gap-2 gap-x-4">
+    <ul class="w-full h-fit grid grid-cols-2 mh:grid-cols-4 gap-2 gap-x-4">
       {props.children}
     </ul>
   );
