@@ -1,20 +1,23 @@
 export default function Navigation() {
   return (
-    <nav class="fixed z-[1000] bottom-4 left-1/2 -translate-x-1/2 w-fit h-fit min-h-12 p-1 text-black bg-linear-150 from-teal-500/30 to-teal-500/40 border border-white/80 rounded-full backdrop-blur-xs text-sky-700/90 text-shadow-2xs font-semibold">
-      <div class="w-full h-fit p-1 py-2">
-        <ul class="w-full h-fit flex flex-row items-center justify-center gap-2">
+    <nav class="fixed z-[1000] bottom-4 mh:bottom-auto mh:top-4 left-1/2 mh:left-auto mh:right-4 -translate-x-1/2 mh:translate-0 w-fit h-fit min-h-12 p-0.5 text-gray-900/80 bg-linear-150 from-amber-500 via-amber-200 to-amber-600 rounded-full backdrop-blur-xs font-semibold">
+      <div class="w-full h-fit px-5 bg-gray-100 rounded-full">
+        <ul class="w-full h-fit flex flex-row items-center justify-center gap-4 leading-[3rem]">
           <li>
-            <a href="" class="w-fit h-fit px-3 py-2 rounded-full bg-linear-180 from-white/50 to-white/30 shadow-sm border-t border-white">
+            <a href="" class="w-fit h-fit rounded-full bg-gray-100">
               Home
             </a>
           </li>
           <li>
-            <a href="" class="w-full h-fit px-3 py-2 rounded-full bg-linear-180 from-white/50 to-white/30 shadow-sm border-t border-white">
+            <a href="" class="w-full h-fit rounded-full bg-gray-100">
               Team
             </a>
           </li>
           <li>
-            <a href="" class="w-full h-fit px-3 py-2 rounded-full bg-linear-180 from-white/50 to-white/30 shadow-sm border-t border-white whitespace-nowrap">
+            <a
+              href=""
+              class="w-full h-fit rounded-full bg-gray-100 whitespace-nowrap"
+            >
               About Us
             </a>
           </li>

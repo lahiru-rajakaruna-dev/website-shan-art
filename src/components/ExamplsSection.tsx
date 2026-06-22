@@ -2,15 +2,20 @@ import type { ParentProps } from "solid-js";
 
 export default function ExamplesSection() {
   return (
-    <section class="">
-      <div class="w-full h-fit min-h-screen p-4 bg-black text-white">
-        <h2 class="mb-16 text-3xl font-bold">Some of our work</h2>
+    <section class="relative w-full h-screen overflow-hidden">
+      <div id="examples_section_figure" class="bg-image" />
+      <div class="relative w-full h-fit min-h-screen p-4">
+        <h2 class="mb-4 text-3xl font-bold">
+          <span>Work</span>
+          <br />
+          <span>That Proves</span>
+        </h2>
         <input
           type="search"
           name="service_search_input"
           id="input_service-search"
           placeholder="Search for work"
-          class="w-full h-fit px-3 py-2 mb-4 rounded-md bg-white text-black border-2 border-red-500"
+          class="absolute top-24 left-4 right-4 mh:right-48 w-auto h-fit px-3 py-2 mb-2 text-xs text-yellow-600 rounded-md bg-white/30 backdrop-blur-xs border-2 border-yellow-400"
         />
         <ExampleList>
           <ExampleList.ExampleCard
@@ -56,8 +61,11 @@ function ExampleCard(props: {
   serviceArea: string;
 }) {
   return (
-    <li class="mb-4 break-inside-avoid">
-      <article tabIndex={1} class="relative w-full min-h-50 mh:h-screen lg:h-[400px] group/example-card focus:bg-red-500 p-1 flex flex-row items-stretch justify-start bg-white text-black rounded-md overflow-hidden shadow-sm">
+    <li class="mb-4 w-full h-fit mh:h-[180px] lg:h-fit">
+      <article
+        tabIndex={1}
+        class="relative w-full h-50 mh:h-full lg:h-[400px] group/example-card focus:bg-red-500 p-1 flex flex-row items-stretch justify-start bg-white text-black rounded-md overflow-hidden shadow-sm border border-amber-400"
+      >
         <img
           src={props.imageUrl}
           alt={`Shan art adverising work example for ${props.serviceName}`}
@@ -74,7 +82,11 @@ function ExampleCard(props: {
 }
 
 function ExampleList(props: ParentProps) {
-  return <ul class="w-full h-fit mh:min-h-screen flex flex-col items-stretch justify-start gap-3">{props.children}</ul>;
+  return (
+    <ul class="absolute top-36 bottom-4 left-4 right-16 mh:right-64 w-auto h-auto pb-56 flex flex-col items-stretch justify-start gap-3 overflow-y-scroll">
+      {props.children}
+    </ul>
+  );
 }
 
 ExampleList.ExampleCard = ExampleCard;
