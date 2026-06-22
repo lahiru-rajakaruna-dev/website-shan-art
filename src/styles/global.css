@@ -9,13 +9,34 @@
     font-family: "Arima";
 }
 
+body {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    background-color: white;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: url('/home/gate.png');
+    background-attachment: fixed;
+    background-position: 0% 20%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    will-change: transform;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5 {
     color: hsla(45, 90%, 51%, 0.9) !important;
-    text-shadow: 0px 0px 3px hsla(50, 90%, 70%, 0.9);
+    /* text-shadow: 0px 0px 2px hsla(50, 90%, 10%, 0.7); */
     text-rendering: optimizeLegibility;
     text-decoration: underline;
     font-family: "Caesar Dressing", "serif" !important;
@@ -26,7 +47,7 @@ h5 {
 
 section:not(:first-child) {
     margin: 64px 0px;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
 }
 
 
@@ -49,7 +70,18 @@ section:not(:first-child) {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    transform: scale(2)
+    transform: perspective(1000px) translateZ(1000px);
+    animation: zoom-out 1000ms forwards 1s ease-out;
+}
+
+@keyframes zoom-out {
+    from {
+        transform: translateZ(1000px);
+    }
+
+    to {
+        transform: translateZ(500px);
+    }
 }
 
 
@@ -63,6 +95,7 @@ section:not(:first-child) {
 }
 
 
+
 #angle {
     width: 600px;
     height: 680px;
@@ -72,9 +105,19 @@ section:not(:first-child) {
     background-repeat: no-repeat;
     background-position: bottom center;
     /* transform-style: preserve-3d; */
-    transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-21%) translateY(25%) scale(.35);
+    transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-50%) translateY(25%) scale(.35);
+    animation: move-in-from-left 1000ms ease-out 2000ms 1 forwards;
 }
 
+@keyframes move-in-from-left {
+    from {
+        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-50%) translateY(25%) scale(.55);
+    }
+
+    to {
+        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-21%) translateY(25%) scale(.35);
+    }
+}
 
 #devil {
     width: 800px;
@@ -85,7 +128,54 @@ section:not(:first-child) {
     background-repeat: no-repeat;
     background-position: bottom center;
     /* transform-style: preserve-3d; */
-    transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(16%) translateY(24%) scale(.35);
+    transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(45%) translateY(24%) scale(.35);
+    animation: move-in-from-right 1000ms ease-out 2000ms 1 forwards;
+}
+
+@keyframes move-in-from-right {
+    from {
+        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(45%) translateY(24%) scale(.55);
+    }
+
+    to {
+        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(16%) translateY(24%) scale(.35);
+    }
+}
+
+#section-1 h1 {
+    animation: fade-in 1000ms ease-out 3000ms 1 forwards;
+}
+
+#section-1 p {
+    animation: fade-in 1000ms ease-out 4000ms 1 forwards;
+}
+
+#section-1 a {
+    animation: fade-in-up 1000ms ease-out 5000ms 1 forwards;
+}
+
+@keyframes fade-in {
+    from {
+        transform: translateY(-5%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(-0%);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        transform: translateY(10%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(-0%);
+        opacity: 1;
+    }
 }
 
 #services_section_figure {
