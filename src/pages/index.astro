@@ -12,9 +12,7 @@ import Footer from "../components/Footer";
 <PageLayout title="Best & Most Popular Graphics Shop | Shar Art Advertising">
   <div class="max-w-7xl h-screen mx-auto bg-transparent">
     <Navigation />
-    <main
-      class="w-full h-screen overflow-x-hidden overflow-y-auto snap-mandatory"
-    >
+    <main class="">
       <!-- HERO SECTION -->
       <HeroSection />
       <!-- SERVICES SECTION -->
@@ -27,3 +25,87 @@ import Footer from "../components/Footer";
     <Footer />
   </div>
 </PageLayout>
+<script>
+  import { config } from "astro:schema";
+
+  const MAX_SCROLL_Y =
+    document.documentElement.scrollHeight - window.innerHeight;
+  let start = 0;
+  let end = 0;
+  let direction = 0;
+  let elapsedTime = 0;
+  const TIME_FRAME = 100;
+  const STEP_SIZE = window.innerHeight + 80;
+  let IS_ANIMATING = false;
+  let count = 0;
+  // SETUP
+  window.addEventListener("wheel", wheelEventHandler, {
+    capture: true,
+    passive: false,
+  });
+
+  // EVENT HANDLER
+  function wheelEventHandler(e: WheelEvent) {
+    count += 1;
+    e.preventDefault();
+    if (IS_ANIMATING) {
+      return;
+    }
+
+    console.log(start, end, direction);
+    getScrollDirection(e);
+    setPositions();
+    console.log(start, end, direction);
+    requestAnimationFrame(updateScroll);
+  }
+
+  // SCROLL UPDATE
+  function updateScroll(timestap: number) {
+    IS_ANIMATING = true;
+    if (elapsedTime > TIME_FRAME) {
+      elapsedTime = 0;
+      IS_ANIMATING = false;
+      console.log(window.scrollY);
+      return;
+    }
+
+    if (Math.abs(end - start) < 0.5) {
+      IS_ANIMATING = false;
+      return;
+    }
+
+    // MAP 0 -> 60 to 0.0 -> 1.0
+    const linearProgress = elapsedTime / TIME_FRAME;
+    const mappedLinearProgress = linearProgress * 12 - 6;
+    const curvedProgress = sigmoid(mappedLinearProgress);
+    const curvedScrollProgress = start + (end - start) * curvedProgress;
+    // console.group(`LOG ${count}` + "=".repeat(10));
+    // console.table({
+    //   linearProgress,
+    //   mappedLinearProgress,
+    //   curvedProgress,
+    // curvedScrollProgress,
+    // });
+    // console.groupEnd();
+    window.scrollTo({ top: curvedScrollProgress, behavior: "smooth" });
+    elapsedTime += 1;
+    requestAnimationFrame(updateScroll);
+  }
+
+  function sigmoid(x: number) {
+    return 1 / (1 + Math.exp(-x));
+  }
+
+  function setPositions() {
+    start = window.scrollY;
+    end = trimScroll(start + STEP_SIZE * direction);
+  }
+
+  function trimScroll(nextY: number) {
+    return Math.max(0, Math.min(MAX_SCROLL_Y, nextY));
+  }
+
+  function getScrollDirection(e: WheelEvent) {
+    direction = e.deltaY > 0 ? -1 : 1;
+  }
+</script>

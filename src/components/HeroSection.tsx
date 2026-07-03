@@ -7,10 +7,8 @@ export default function HeroSection() {
       class="relative w-full h-screen select-none mh:overflow-hidden"
     >
       <div class="relative w-full h-screen p-4 flex flex-col items-stretch justify-center text-white bg-transparent perspective-distant perspective-origin-center">
-        {/* <div id="monument" class="bg-image"></div> */}
         <div id="angle" class="bg-image"></div>
         <div id="devil" class="bg-image"></div>
-        {/* <Design /> */}
         <H1 />
         <Text />
         <CTA />
@@ -21,18 +19,17 @@ export default function HeroSection() {
 
 function H1() {
   return (
-    <h1 class="absolute z-[-3] mh:z-[8] top-1/2 mh:top-0 left-1/2 mh:left-4 -translate-x-1/2 mh:translate-x-0 -translate-y-[350%] mh:translate-y-0 translate-z-[-500px] mh:translate-z-[0px] transform-3d mb-12 text-6xl mh:text-4xl lg:text-7xl text-blue-950 font-bold text-center text-shadow-[0px_1px_5px_hsla(260,5%,1%,.8)] pointer-events-none opacity-0">
+    <h1 class="absolute z-[-3] mh:z-[8] top-1/2 mh:top-0 left-1/2 mh:left-4 -translate-x-1/2 mh:translate-x-0 -translate-y-[300%] mh:translate-y-0 translate-z-[-500px] mh:translate-z-[0px] transform-3d mb-12 text-6xl mh:text-4xl lg:text-7xl text-blue-950 font-bold text-center text-shadow-[0px_1px_5px_hsla(260,5%,1%,.8)] pointer-events-none opacity-0">
       <span class="mh:hidden tracking-tighter">Shan Art</span>
       <br class="" />
       <span class="mh:hidden tracking-tighter">Advertising</span>
-      <span class="hidden mh:block">Shan Art Advertising</span>
     </h1>
   );
 }
 
 function Text() {
   return (
-    <div class="absolute z-[8] top-1/2 mh:top-5/12 lg:top-3/12 left-1/2 mh:left-4 -translate-x-1/2 mh:translate-x-0 translate-y-[-30%] w-full mh:w-1/2 lg:w-1/2 px-4 mh:p-0 text-black text-center mh:text-left lg:text-4xl lg:font-thin">
+    <div class="absolute z-[4] top-1/2 mh:top-5/12 lg:top-3/12 left-1/2 mh:left-4 -translate-x-1/2 mh:translate-x-0 translate-y-[-50%] w-7/12 mh:w-1/2 lg:w-1/2 px-4 mh:p-0 text-black text-center mh:text-left lg:text-4xl lg:font-thin">
       <p class="mb-4 opacity-0">
         Best and the most popular advertising agency in Anuradhapura
       </p>
@@ -46,14 +43,13 @@ function Text() {
 
 function CTA() {
   return (
-    <a
-      href="tel:+94741288437"
-      class="absolute z-[6] bottom-2/12 lg:bottom-4 left-1/2 mh:right-4 mh:left-auto lg:right-0 -translate-x-1/2 mh:translate-x-0 -translate-y-1/2 btn btn-ghost w-11/12 mh:w-48 lg:w-78 p-0.5 bg-linear-120 from-amber-400 via-amber-100 to-amber-600 opacity-0"
-    >
-      <p class="w-full h-full bg-white flex flex-col items-center justify-center text-amber-400">
-        Contact Us
-      </p>
-    </a>
+    <div id="hero-cta" class="">
+      <a href="tel:+94741288437" class="cursor-pointer">
+        <p class="w-full h-full flex flex-col items-center justify-center text-2xl text-amber-500 text-shadow-[-.5px_.5px_0px] text-shadow-black">
+          Contact Us
+        </p>
+      </a>
+    </div>
   );
 }
 

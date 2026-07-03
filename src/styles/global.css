@@ -7,6 +7,10 @@
 
 :root {
     font-family: "Arima";
+    --easing: cubic-bezier(0.15, 0.1, 0.15, 0.95);
+    --snappy-animation: 300ms;
+    --quick-animation: 1000ms;
+    --realistic-animation: 2000ms
 }
 
 body {
@@ -17,18 +21,7 @@ body {
     background-color: white;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: url('/home/gate.png');
-    background-attachment: fixed;
-    background-position: 0% 20%;
-    background-size: 100% auto;
-    background-repeat: no-repeat;
-    will-change: transform;
-}
+
 
 h1,
 h2,
@@ -59,31 +52,63 @@ section:not(:first-child) {
 
 .bg-image {
     pointer-events: none;
-    background-attachment: fixed;
 }
 
-#monument {
-    position: absolute;
-    inset: 0;
-    z-index: -5;
-    background-image: url('/home/gate.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: perspective(1000px) translateZ(1000px);
-    animation: zoom-out 1000ms forwards 1s ease-out;
+#section-1 {
+    view-timeline-name: --section-one-view-progress;
 }
 
-@keyframes zoom-out {
-    from {
-        transform: translateZ(1000px);
+@layer monument {
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0px;
+        z-index: -1;
+        background: url('/home/gate.png');
+        background-attachment: fixed;
+        background-position: 50% 10%;
+        background-size: auto 80%;
+        background-repeat: no-repeat;
+        /* will-change: transform; */
+        transform-origin: center;
+        /* animation: zoom-out 1500ms forwards 0s ease-in-out; */
     }
 
-    to {
-        transform: translateZ(500px);
+    @keyframes zoom-out {}
+
+    @media screen and (min-width: 1024px) {
+
+        @keyframes zoom-out {}
     }
 }
 
+@layer hero-cta {
+
+    #hero-cta {
+        position: absolute;
+        z-index: 10;
+        bottom: -10px;
+        right: -5%;
+        width: 300px;
+        height: 130px;
+        background-image: url('/home/notice-board.png');
+        background-size: 100% 100%;
+        background-position: center;
+        transform-origin: center;
+        transform: translateX(100%);
+        animation: slide-in-from-right 5000ms var(--easing) 3500ms 1 forwards;
+    }
+
+    @keyframes slide-in-from-right {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(-0%);
+        }
+    }
+}
 
 #angle,
 #devil {
@@ -95,50 +120,88 @@ section:not(:first-child) {
 }
 
 
-
-#angle {
-    width: 600px;
-    height: 680px;
-    z-index: -2;
-    background-image: url('/home/angle.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: bottom center;
-    /* transform-style: preserve-3d; */
-    transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-50%) translateY(25%) scale(.35);
-    animation: move-in-from-left 1000ms ease-out 2000ms 1 forwards;
-}
-
-@keyframes move-in-from-left {
-    from {
-        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-50%) translateY(25%) scale(.55);
+@layer angle {
+    #angle {
+        width: 600px;
+        height: 680px;
+        z-index: 5;
+        background-image: url('/home/angle.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        /* transform-style: preserve-3d; */
+        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-50%) translateY(25%) scale(.35);
+        animation: move-in-from-left var(--realistic-animation) var(--easing) 2000ms 1 forwards;
     }
 
-    to {
-        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-21%) translateY(25%) scale(.35);
+    @keyframes move-in-from-left {
+        from {
+            transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-50%) translateY(28%) scale(.55);
+        }
+
+        to {
+            transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-21%) translateY(25%) scale(.35);
+        }
+    }
+
+    @media screen and (min-width:1024px) {
+        #angle {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-80%) translateY(28%) scale(.60);
+        }
+
+        @keyframes move-in-from-left {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-80%) translateY(28%) scale(.60);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-70%) translateY(27%) scale(.55);
+            }
+        }
     }
 }
 
-#devil {
-    width: 800px;
-    height: 680px;
-    z-index: -2;
-    background-image: url('/home/devil.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: bottom center;
-    /* transform-style: preserve-3d; */
-    transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(45%) translateY(24%) scale(.35);
-    animation: move-in-from-right 1000ms ease-out 2000ms 1 forwards;
-}
-
-@keyframes move-in-from-right {
-    from {
-        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(45%) translateY(24%) scale(.55);
+@layer devil {
+    #devil {
+        width: 800px;
+        height: 680px;
+        z-index: 5;
+        background-image: url('/home/devil.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        /* transform-style: preserve-3d; */
+        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(45%) translateY(24%) scale(.35);
+        animation: move-in-from-right var(--realistic-animation) var(--easing) 2000ms 1 forwards;
     }
 
-    to {
-        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(16%) translateY(24%) scale(.35);
+    @keyframes move-in-from-right {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(45%) translateY(24%) scale(.55);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(16%) translateY(24%) scale(.35);
+        }
+    }
+
+    @media screen and (min-width:1024px) {
+        @keyframes move-in-from-right {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(65%) translateY(31%) scale(.60);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(50%) translateY(27%) scale(.55);
+            }
+        }
     }
 }
 
@@ -146,12 +209,8 @@ section:not(:first-child) {
     animation: fade-in 1000ms ease-out 3000ms 1 forwards;
 }
 
-#section-1 p {
+#section-1>div>div>p {
     animation: fade-in 1000ms ease-out 4000ms 1 forwards;
-}
-
-#section-1 a {
-    animation: fade-in-up 1000ms ease-out 5000ms 1 forwards;
 }
 
 @keyframes fade-in {
@@ -178,15 +237,40 @@ section:not(:first-child) {
     }
 }
 
+#section-2 {
+    view-timeline-name: --section-2-view-progress;
+}
+
+
 #services_section_figure {
+    border: 2px solid red;
     position: absolute;
-    inset: 0;
+    left: 0;
+    bottom: 0;
+    height: 80vh;
+    width: 45vw;
     z-index: 5;
     background: url('/home/female-figure-1.png');
-    background-position: -15% 120%;
-    background-size: auto 80%;
+    background-position: center;
+    background-size: auto 100%;
     background-repeat: no-repeat;
     pointer-events: none;
+    overflow: hidden;
+    animation: slide-in-from-left both;
+    animation-timeline: --section-2-view-progress;
+    animation-range: 10% 50%;
+}
+
+@keyframes slide-in-from-left {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
 }
 
 #examples_section_figure {
@@ -212,10 +296,6 @@ section:not(:first-child) {
 }
 
 @media screen and (min-width:600px) {
-    #monument {
-        transform: scale(.9);
-    }
-
     #angle {
         transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-42%) translateY(13%) scale(.3);
     }
@@ -241,12 +321,8 @@ section:not(:first-child) {
 }
 
 @media screen and (min-width:1024px) {
-    #monument {
-        transform: scale(.9);
-    }
-
     #angle {
-        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-58%) translateY(25%) scale(.7);
+        transform: translateX(-50%) translateY(-50%) translateZ(-0px) translateX(-28%) translateY(25%) scale(.7);
     }
 
     #devil {

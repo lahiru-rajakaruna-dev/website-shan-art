@@ -2,7 +2,7 @@ import type { ParentProps } from "solid-js";
 
 export default function ServicesSection() {
   return (
-    <section class="relative w-full h-screen overflow-hidden">
+    <section id="section-2" class="relative w-full h-screen overflow-hidden">
       <div id="services_section_figure" class="bg-image" />
       <div class="relative w-full h-screen p-4">
         <h2 class="mh:absolute top-8 mh:left-[215px] right-4 mh:right-auto text-3xl text-right mh:text-left text-shadow-2xs text-shadow-black font-bold mb-2">
