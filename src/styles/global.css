@@ -37,6 +37,16 @@
       transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) rotateX(calc(var(--x-rotation) * -1)) rotateY(calc(var(--y-rotation) * -1)) rotateZ(calc(var(--z-rotation) * -1));
     }
   }
+
+  @keyframes btn-raise {
+    from {
+      transform: scale(1);
+    }
+
+    to {
+      transform: scale(1.05);
+    }
+  }
 }
 
 :root {
@@ -89,6 +99,27 @@ section:not(:first-child) {
 .bg-image {
   pointer-events: none;
 }
+
+button, .btn {
+  animation-name: btn-raise;
+  animation-direction: reverse;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+  animation-delay: 100ms;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}
+
+button:hover, .btn:hover {
+  animation-name: btn-raise;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+  animation-delay: 100ms;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+}
+
+a:hover, .link:hover {}
 
 /* TIMELINES */
 #section-1 {

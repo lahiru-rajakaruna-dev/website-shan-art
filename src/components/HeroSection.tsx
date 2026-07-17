@@ -114,7 +114,7 @@ function Text() {
 
 function CTA() {
   return (
-    <div id="hero-cta" class="">
+    <div id="hero-cta" class="rounded-md">
       <a href="tel:+94741288437" class="cursor-pointer">
         <p class="w-full h-full flex flex-col items-center justify-center text-2xl">
           Contact Us
