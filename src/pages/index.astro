@@ -10,24 +10,22 @@ import Footer from "../components/Footer";
 ---
 
 <PageLayout title="Best & Most Popular Graphics Shop | Shar Art Advertising">
-  <div class="max-w-7xl h-screen mx-auto bg-transparent">
+  <div class="w-screen h-screen mx-auto bg-transparent">
     <Navigation />
     <main class="">
       <!-- HERO SECTION -->
-      <HeroSection />
+      <HeroSection client:load />
       <!-- SERVICES SECTION -->
-      <ServicesSection />
+      <!-- <ServicesSection client:load /> -->
       <!-- EXAMPLE SECTION -->
-      <ExamplesSection />
+      <!-- <ExamplesSection /> -->
       <!-- CONTACT SECTION -->
-      <ContactSection />
+      <!-- <ContactSection /> -->
     </main>
     <Footer />
   </div>
 </PageLayout>
 <script>
-  import { config } from "astro:schema";
-
   const MAX_SCROLL_Y =
     document.documentElement.scrollHeight - window.innerHeight;
   let start = 0;
@@ -35,9 +33,9 @@ import Footer from "../components/Footer";
   let direction = 0;
   let elapsedTime = 0;
   const TIME_FRAME = 100;
-  const STEP_SIZE = window.innerHeight + 80;
+  const STEP_SIZE = window.innerHeight + 64;
   let IS_ANIMATING = false;
-  let count = 0;
+
   // SETUP
   window.addEventListener("wheel", wheelEventHandler, {
     capture: true,
@@ -46,26 +44,22 @@ import Footer from "../components/Footer";
 
   // EVENT HANDLER
   function wheelEventHandler(e: WheelEvent) {
-    count += 1;
     e.preventDefault();
     if (IS_ANIMATING) {
       return;
     }
 
-    console.log(start, end, direction);
+    IS_ANIMATING = true;
     getScrollDirection(e);
     setPositions();
-    console.log(start, end, direction);
     requestAnimationFrame(updateScroll);
   }
 
   // SCROLL UPDATE
   function updateScroll(timestap: number) {
-    IS_ANIMATING = true;
     if (elapsedTime > TIME_FRAME) {
       elapsedTime = 0;
       IS_ANIMATING = false;
-      console.log(window.scrollY);
       return;
     }
 
@@ -79,14 +73,6 @@ import Footer from "../components/Footer";
     const mappedLinearProgress = linearProgress * 12 - 6;
     const curvedProgress = sigmoid(mappedLinearProgress);
     const curvedScrollProgress = start + (end - start) * curvedProgress;
-    // console.group(`LOG ${count}` + "=".repeat(10));
-    // console.table({
-    //   linearProgress,
-    //   mappedLinearProgress,
-    //   curvedProgress,
-    // curvedScrollProgress,
-    // });
-    // console.groupEnd();
     window.scrollTo({ top: curvedScrollProgress, behavior: "smooth" });
     elapsedTime += 1;
     requestAnimationFrame(updateScroll);

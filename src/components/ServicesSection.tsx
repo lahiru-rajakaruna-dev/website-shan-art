@@ -1,11 +1,47 @@
-import type { ParentProps } from "solid-js";
+import { createEffect, type ParentProps } from "solid-js";
 
 export default function ServicesSection() {
+  createEffect(() => {
+    if (!document) {
+      return;
+    }
+
+    document
+      .getElementById("section-2")
+      ?.addEventListener("mousemove", updatePerspectiveOrigin);
+
+    return () => {
+      document.removeEventListener("mousemove", updatePerspectiveOrigin);
+    };
+  });
+
+  function updatePerspectiveOrigin(e: MouseEvent) {
+    e.stopPropagation();
+    const element = e.currentTarget as HTMLElement;
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    const elementWidth = element.clientWidth;
+    const elementHeight = element.clientHeight;
+
+    const FACTOR = 0.2;
+
+    const xDistanceToCenter = (mouseX - elementWidth / 2) * FACTOR;
+    const yDistanceToCenter = (mouseY - elementHeight / 2) * FACTOR;
+
+    element.style.perspectiveOrigin = `calc(50% + ${xDistanceToCenter}px) calc(50% + ${yDistanceToCenter}px)`;
+  }
   return (
     <section id="section-2" class="relative w-full h-screen overflow-hidden">
-      <div id="services_section_figure" class="bg-image" />
+      <img src="/section_2/bg.png" alt="" class="section-2 bg-image" id="bg" />
+      <img
+        src="/section_2/subject.png"
+        alt=""
+        class="section-2 bg-image"
+        id="subject"
+      />
+      <img src="/section_2/fg.png" alt="" class="section-2 bg-image" id="fg" />
       <div class="relative w-full h-screen p-4">
-        <h2 class="mh:absolute top-8 mh:left-[215px] right-4 mh:right-auto text-3xl text-right mh:text-left text-shadow-2xs text-shadow-black font-bold mb-2">
+        <h2 class="text-5xl text-shadow-[2px_2px_3px] text-shadow-black">
           Services <br /> We Can Provide for You
         </h2>
         <input
@@ -14,7 +50,7 @@ export default function ServicesSection() {
           id="input_service-search"
           inputMode="search"
           placeholder="Search for services"
-          class="mh:absolute top-26 left-5/12 right-4 mh:right-4 w-full mh:w-auto h-fit px-3 py-2 mb-2 ml-auto text-xs text-yellow-400 rounded-md border border-yellow-400 shadow-sm text-right bg-white/30 backdrop-blur-sm"
+          class="section-2 absolute top-32 lg:w-96 lg:px-4 lg:py-2 bg-white/60 backdrop-blur-xs border-2 border-amber-300 rounded-sm text-amber-600"
         />
         <ServiceList>
           <ServiceList.ServiceCard imageUrl="" serviceName="Mug Printing" />
@@ -48,7 +84,10 @@ function ServiceCard(props: { imageUrl: string; serviceName: string }) {
 
 function ServiceList(props: ParentProps) {
   return (
-    <ul class="mh:absolute mh:top-36 mh:right-4 mh:bottom-0 mh:left-4/12 w-8/12 mh:w-auto h-fit mh:h-auto ml-auto mh:ml-auto py-20 mh:py-1 mh:px-30 grid grid-cols-1 mh:grid-cols-4 gap-2 gap-x-4 mh:flex flex-row items-center justify-start overflow-y-scroll mh:overflow-y-scroll">
+    <ul
+      id="list"
+      class="section-2 w-4/12 h-fit mh:h-auto py-20 mh:py-1 mh:px-30 grid grid-cols-1 mh:grid-cols-4 lg:grid-cols-4 gap-2 gap-x-4 mh:flex flex-row items-center justify-start overflow-y-scroll mh:overflow-y-scroll"
+    >
       {props.children}
     </ul>
   );
