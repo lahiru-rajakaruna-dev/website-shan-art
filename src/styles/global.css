@@ -4,12 +4,12 @@
 @layer base {
   @keyframes fade-down {
     from {
-      transform: translateY(-30px);
+      transform: translateY(-30px) translateZ(var(--z));
       opacity: 0;
     }
 
     to {
-      transform: translateY(-0px);
+      transform: translateY(-0px) translateZ(var(--z));
       opacity: 1;
     }
   }
@@ -91,8 +91,12 @@ h5 {
   text-transform: uppercase;
 }
 
+section {
+  overflow: hidden;
+}
+
 section:not(:first-child) {
-  margin: 64px 0px;
+  margin: 0px 0px;
   scroll-snap-align: start;
 }
 
@@ -101,25 +105,41 @@ section:not(:first-child) {
 }
 
 button, .btn {
-  animation-name: btn-raise;
-  animation-direction: reverse;
-  animation-duration: 500ms;
-  animation-timing-function: ease-in-out;
-  animation-delay: 100ms;
-  animation-fill-mode: both;
-  animation-iteration-count: 1;
+  color: transparent;
+  border-radius: 10px;
+  transition: all 500ms var(--ease-sigmoid);
+  overflow: hidden;
 }
 
 button:hover, .btn:hover {
-  animation-name: btn-raise;
-  animation-duration: 500ms;
-  animation-timing-function: ease-in-out;
-  animation-delay: 100ms;
-  animation-fill-mode: both;
-  animation-iteration-count: 1;
+  color: gold;
+  border-radius: 9999999px;
 }
 
-a:hover, .link:hover {}
+button::before, .btn::before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0px;
+  bottom: 0px;
+  width: 30%;
+  transform: skewX(-60deg) translateX(-280%);
+  background-color: hsla(55, 90%, 65%, 0.3);
+  transition: all 1000ms var(--ease-sigmoid);
+}
+
+button:hover::before, .btn:hover::before {
+  transform: skew(-60deg) translateX(280%);
+}
+
+a, .link {
+  color: white;
+  transition: all 1000ms var(--ease-sigmoid);
+}
+
+a:hover, .link:hover {
+  color: gold;
+}
 
 /* TIMELINES */
 #section-1 {
@@ -141,7 +161,7 @@ a:hover, .link:hover {}
 @layer navigation {
   @keyframes slide-left-edge {
     from {
-      left: 100%;
+      left: 120%;
     }
 
     to {
@@ -151,17 +171,12 @@ a:hover, .link:hover {}
 
   @keyframes slide-right-edge {
     from {
-      right: 0%
+      right: -20%
     }
 
     to {
       right: 120%;
     }
-  }
-
-  #top-navigation {
-    fill: none;
-    position: relative;
   }
 
   #top-navigation::before {
@@ -175,23 +190,24 @@ a:hover, .link:hover {}
     right: 30%;
     overflow: hidden;
     mix-blend-mode: exclusion;
-    background-color: hsla(0, 0%, 100%, 0.9);
+    background-color: hsla(0, 0%, 100%, 0.5);
     transform: skewX(-60deg);
     animation-name: slide-left-edge, slide-right-edge;
     animation-duration: 1000ms;
     animation-timing-function: var(--ease-sigmoid);
-    animation-delay: 16000ms, 16300ms;
+    animation-delay: 9000ms, 9300ms;
     animation-fill-mode: both;
     animation-direction: normal;
   }
 
   #top-navigation .nav-link {
+    --z: 0px;
     position: relative;
     color: white;
     font-size: 1.5rem;
     animation-name: fade-down;
-    animation-delay: calc(16000ms + (var(--index) * 250ms));
-    animation-duration: 1000ms;
+    animation-delay: calc(9500ms + (var(--index) * 250ms));
+    animation-duration: var(--realistic-animation);
     animation-timing-function: var(--ease-sigmoid);
     animation-fill-mode: both;
     animation-direction: normal;
@@ -222,6 +238,7 @@ a:hover, .link:hover {}
     animation-fill-mode: both;
     animation-direction: normal;
     animation-iteration-count: 1;
+    will-change: perspective-origin;
   }
 
   #section-1 #container-1 {
@@ -252,7 +269,8 @@ a:hover, .link:hover {}
     right: 0px;
     bottom: 0px;
     width: 100vw;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
     object-position: center;
     transform: translateZ(var(--z));
   }
@@ -260,19 +278,19 @@ a:hover, .link:hover {}
   #section-1 #bg-1 {
     --z: 100px;
     z-index: -6;
-    filter: blur(1.75px);
+    filter: blur(2px);
   }
 
   #section-1 #bg-2 {
     --z: 200px;
     z-index: -5;
-    filter: blur(0.7px);
+    /* filter: blur(0.7px); */
   }
 
   #section-1 #bg-3 {
-    --z: 2000px;
+    --z: 450px;
     z-index: -4;
-    /* filter: blur(1.4px); */
+    /* filter: blur(5px); */
   }
 
   #section-1 #bg-4 {
@@ -294,13 +312,19 @@ a:hover, .link:hover {}
   }
 
   #hero-heading {
-    --previous-animation-duration: 9000ms;
+    --previous-animation-duration: 6000ms;
+    --z: 150px;
     position: absolute;
-    top: calc(50% - 10rem);
-    z-index: 4;
+    top: calc(20% - 6.5rem);
+    left: calc(50% - 450px);
+    z-index: -6;
     opacity: 0;
     pointer-events: none;
-    -webkit-text-stroke: 2px hsla(1, 1%, 99%, .5);
+    line-height: 1;
+
+
+    transform-style: preserve-3d;
+    /* -webkit-text-stroke: 2px hsla(1, 1%, 1%, .5); */
     animation-name: fade-down;
     animation-duration: var(--realistic-animation);
     animation-delay: var(--previous-animation-duration);
@@ -308,20 +332,23 @@ a:hover, .link:hover {}
     animation-iteration-count: 1;
     animation-direction: normal;
     animation-fill-mode: forwards;
-    paint-order: stroke fill;
+    /* paint-order: stroke fill; */
   }
 
   #hero-cta {
-    --previous-animation-durations: 12000ms;
+    --previous-animation-durations: 8000ms;
+    --z: 500px;
     position: absolute;
     z-index: 10;
-    top: calc(50% + 8rem);
+    top: calc(70% + 8rem);
     left: calc(50% - 125px);
     width: 250px;
     height: 60px;
-    border: 3px solid white;
+    transform-origin: center;
+    border: 2px solid white;
     opacity: 0;
     background-color: hsla(260, 5%, 90%, 0.2);
+    backdrop-filter: blur(3px);
     color: white;
     animation-name: fade-down;
     animation-duration: var(--realistic-animation);
@@ -333,18 +360,27 @@ a:hover, .link:hover {}
   }
 
   #hero-content {
-    z-index: 4;
     --width: 500px;
-    --previous-animation-delays: 10000ms;
+    --previous-animation-delays: 7000ms;
+    --z: 350px;
+    z-index: 4;
     position: absolute;
-    top: calc(50% - 5rem);
+    top: calc(70% - 5rem);
     left: calc(50% - var(--width) / 2);
     width: var(--width);
     pointer-events: none;
-    color: white;
+    padding: .5rem;
+
+    /* border: 2px solid gold; */
+    /* background-color: hsla(0, 0%, 100%, 0.1); */
+    backdrop-filter: blur(1px);
+    mix-blend-mode: multiply;
+
+    color: black;
     font-size: 1.5rem;
     text-align: center;
     opacity: 0;
+
     animation-name: fade-down;
     animation-duration: var(--realistic-animation);
     animation-delay: var(--previous-animation-delays);
@@ -352,6 +388,24 @@ a:hover, .link:hover {}
     animation-iteration-count: 1;
     animation-direction: normal;
     animation-fill-mode: forwards;
+  }
+
+  #hero-content::before, #hero-content::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: white;
+    border-radius: 99999px;
+  }
+
+  #hero-content::before {
+    left: -1rem;
+  }
+
+  #hero-content::after {
+    right: -1rem;
   }
 
   .hero-decor-image {
@@ -388,41 +442,253 @@ a:hover, .link:hover {}
 }
 
 @layer section-2 {
-  #section-2 {
-    perspective: 800px;
-    transition: 50ms;
+  @keyframes rotateY {
+    from {
+      transform: perspective(var(--perspective)) rotateX(var(--x-rot)) rotateY(0deg);
+    }
+
+    to {
+      transform: perspective(var(--perspective)) rotateX(var(--x-rot)) rotateY(360deg);
+    }
   }
 
-  .section-2.bg-image {
+  #section-2 {
+    /* perspective: 1200px; */
+    transition: all 500ms ease-in-out;
+  }
+
+  @keyframes pushback-and-comeback {
+    0% {}
+
+    60% {}
+
+    90% {}
+
+    100% {}
+  }
+
+  #section-2 #services-list {
+    --width: 600px;
+    --height: 250px;
+    --x-rot: 6deg;
+    --perspective: 1200px;
+
+    z-index: 5;
+    position: absolute;
+    bottom: calc(35% - var(--height)/2);
+    left: calc(65% - var(--width)/2);
+
+    width: var(--width);
+    height: var(--height);
+    padding: 32px 64px;
+
+    /* overflow-y: visible; */
+    /* overflow-x: auto; */
+
+    /* perspective-origin: 50% 50%; */
+    /* perspective: 300px; */
+    transform-style: preserve-3d;
+
+    animation-name: rotateY;
+    animation-duration: 120s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    animation-direction: normal;
+  }
+
+  #section-2 #services-list[data-animation-state="paused"] {
+    animation-play-state: paused;
+  }
+
+
+  #section-2 #services-list .service-card {
+    --width: 200px;
+    --height: 250px;
+    position: absolute;
+    z-index: -1;
+    left: calc(50% - var(--width)/2);
+    top: calc(80% - var(--height)/2);
+
+    width: var(--width);
+    min-width: var(--width);
+    height: var(--height);
+
+    transform-style: preserve-3d;
+    transform: rotateY(calc((360/var(--total-cards-count)) * (var(--index) - 1) * 1deg)) translateZ(400px);
+    /* backface-visibility: hidden; */
+    border-radius: 100px;
+  }
+
+  .service-card::after {
+    --width: 100%;
+    --height: 100px;
+
+    content: "";
+    position: absolute;
+    top: 80%;
+
+    width: var(--width);
+    height: var(--height);
+
+    transform: perspective(1000px) rotateX(90deg) translateY(60%);
+    filter: blur(10px);
+
+    background: linear-gradient(to bottom, hsla(1, 1%, 1%, .6), transparent);
+  }
+
+  #section-2 .service-card .service-card-bg-image {
+    position: absolute;
+    z-index: 1;
+    inset: 0px;
+    width: auto;
+    height: auto;
+    filter: saturate(.5) opacity(.6);
+  }
+
+  #section-2 .service-card .service-card-frame {
+    position: absolute;
+    z-index: 2;
+    inset: 0px;
+    width: auto;
+    height: auto;
+    filter: saturate(1) contrast(1) hue-rotate(90) brightness(.3);
+  }
+
+  #section-2 .service-card .service-card-content {
+    position: absolute;
+    z-index: 3;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    top: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+  }
+
+  #section-2 .service-card .service-card-emblem {
+    --width: 100px;
+    --height: 100px;
+    position: absolute;
+    z-index: 4;
+    top: calc(30% - (var(--height)/2));
+    left: calc(50% - (var(--width)/2));
+    width: var(--width);
+    height: var(--height);
+    backface-visibility: hidden;
+    image-rendering: optimizeQuality;
+  }
+
+  #section-2 .bg-image {
+    position: absolute;
+    inset: 0;
+    /* top: -115px; */
+
+    width: 100%;
+    height: 100%;
+
+    object-position: bottom center;
+    object-fit: cover;
+  }
+
+  #section-2 #bg {
+    z-index: 1;
+  }
+
+  #section-2 #fg {
+    z-index: 3;
+  }
+
+  #section-2 #heading {
+    position: absolute;
+    z-index: 2;
+    left: 100px;
+    top: 100px;
+    font-size: 10rem;
+    line-height: 1;
+  }
+
+  #section-2-content {
+    --width: 800px;
+    --height: auto;
+    position: absolute;
+    z-index: 5;
+    left: 6rem;
+    bottom: 8rem;
+
+    padding: 1rem;
+
+    color: black;
+    font-size: 2rem;
+    width: var(--width);
+    height: var(--height);
+    background-color: hsla(0, 0%, 100%, 0.2);
+    border-radius: .5rem;
+    backdrop-filter: blur(2px);
+  }
+
+  #section-2-content::before {
+    --width: 5px;
+    content: "";
+    position: absolute;
+    left: -1rem;
+    top: 0;
+    bottom: 0;
+    width: var(--width);
+    background-color: white;
+    border-radius: 99999px;
+  }
+
+  #section-2-cta {
+    position: absolute;
+    z-index: 6;
+    left: 6rem;
+    bottom: 3rem;
+    padding: 1.25rem 1.5rem;
+
+    background-color: black;
+    color: hsl(40, 92%, 40%) !important;
+    font-weight: bold;
+    border-radius: .25rem;
+    line-height: 1;
+
+    overflow: hidden;
+  }
+
+  #section-2-cta::after {
+    content: "+9474 128 8437";
     position: absolute;
     inset: 0px;
-    width: 100%;
-    height: auto;
-    pointer-events: none;
-    object-fit: cover;
-    object-position: center;
-    transform: translateZ(var(--z));
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: black;
+
+    transform: translateY(100%);
+    transition: all 500ms ease-in-out;
+    border: 2px solid gold;
+    border-radius: .25rem;
+    line-height: 1;
   }
 
-  .section-2#bg {
-    --z: 10px;
-    z-index: -1;
-    filter: blur(1px);
+  #section-2-cta:hover#section-2-cta::after {
+    transform: translateY(0%);
   }
 
-  .section-2#subject {
-    --z: 30px;
-    z-index: 5;
+}
+
+@layer footer {
+  footer {
+    width: 100vw;
+    height: fit-content;
   }
 
-  .section-2#fg {
-    --z: 20px;
-    z-index: 1;
-    filter: blur(0.6px);
-  }
-
-  .section-2#list {
-    z-index: 2;
-    position: absolute;
+  footer #footer-container {
+    padding: 2rem 2rem;
   }
 }

@@ -16,7 +16,7 @@ import Footer from "../components/Footer";
       <!-- HERO SECTION -->
       <HeroSection client:load />
       <!-- SERVICES SECTION -->
-      <!-- <ServicesSection client:load /> -->
+      <ServicesSection client:load />
       <!-- EXAMPLE SECTION -->
       <!-- <ExamplesSection /> -->
       <!-- CONTACT SECTION -->
@@ -33,8 +33,11 @@ import Footer from "../components/Footer";
   let direction = 0;
   let elapsedTime = 0;
   const TIME_FRAME = 100;
-  const STEP_SIZE = window.innerHeight + 64;
+  const STEP_SIZE = window.innerHeight;
   let IS_ANIMATING = false;
+  const SCROLL_TRIGGER_TICK_LIMIT = 10;
+  let CURRENT_TICK_COUNT = 0;
+  let TICK_LIMIT_TIMEOUT: number | null = null;
 
   // SETUP
   window.addEventListener("wheel", wheelEventHandler, {
@@ -45,6 +48,22 @@ import Footer from "../components/Footer";
   // EVENT HANDLER
   function wheelEventHandler(e: WheelEvent) {
     e.preventDefault();
+
+    if (TICK_LIMIT_TIMEOUT) {
+      clearTimeout(TICK_LIMIT_TIMEOUT);
+    }
+
+    TICK_LIMIT_TIMEOUT = setTimeout(() => {
+      CURRENT_TICK_COUNT = 0;
+    }, 500);
+
+    console.log(CURRENT_TICK_COUNT);
+
+    if (CURRENT_TICK_COUNT < SCROLL_TRIGGER_TICK_LIMIT) {
+      CURRENT_TICK_COUNT += 1;
+      return;
+    }
+
     if (IS_ANIMATING) {
       return;
     }

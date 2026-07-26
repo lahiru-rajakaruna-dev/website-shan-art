@@ -1,6 +1,14 @@
 import { createEffect, createRenderEffect, createSignal } from "solid-js";
 
 export default function HeroSection() {
+  let onPerspectiveElements: Array<HTMLElement> = [];
+  let bg_image!: HTMLImageElement;
+  let mg_image!: HTMLImageElement;
+  let fg_image!: HTMLImageElement;
+  let heading!: HTMLHeadingElement;
+  let content: HTMLParagraphElement;
+  let cta: HTMLDivElement;
+
   createEffect(() => {
     if (!document) {
       return;
@@ -12,6 +20,19 @@ export default function HeroSection() {
     return () => {
       section_1?.removeEventListener("mousemove", updatePerspectiveOrigin);
     };
+  });
+
+  createEffect(() => {
+    if (!document) {
+      return;
+    }
+
+    document
+      .querySelectorAll("#section-1 .on-perspective")
+      .forEach((element) => {
+        console.log(element.getAttribute("data-perspective-position"));
+        onPerspectiveElements.push(element as HTMLElement);
+      });
   });
 
   function updatePerspectiveOrigin(e: MouseEvent) {
@@ -27,6 +48,10 @@ export default function HeroSection() {
     const xDistanceToCenter = (mouseX - elementWidth / 2) * FACTOR;
     const yDistanceToCenter = (mouseY - elementHeight / 2) * FACTOR;
 
+    // onPerspectiveElements.forEach((element) => {
+    //   element.style = `transform:translateZ(var(--z)) transformX(${xDistanceToCenter}px) transformY(${yDistanceToCenter}px)`;
+    // });
+
     element.style.perspectiveOrigin = `calc(50% + ${xDistanceToCenter}px) calc(50% + ${yDistanceToCenter}px)`;
   }
 
@@ -36,51 +61,64 @@ export default function HeroSection() {
       class="relative w-full h-screen select-none mh:overflow-hidden"
     >
       <img
-        src="/section_1/hero_bg__background.png"
+        loading="eager"
+        src="/section_1/hero_bg__background.webp"
         alt=""
-        class="bg-image section-1"
+        class="bg-image on-perspective"
         id="bg-1"
+        data-perspective-position="1"
       />
       <img
-        src="/section_1/hero_bg__foreground.png"
+        loading="eager"
+        src="/section_1/hero_bg__foreground.webp"
         alt=""
-        class="bg-image section-1"
+        class="bg-image on-perspective"
         id="bg-2"
+        data-perspective-position="2"
       />
       <img
-        src="/section_1/hero_bg__fog_1.png"
+        loading="eager"
+        src="/section_1/columns.webp"
         alt=""
-        class="bg-image section-1"
+        class="bg-image on-perspective"
         id="bg-3"
+        data-perspective-position="3"
       />
-      <img
-        src="/section_1/hero_bg__fog_2.png"
+      {/* <img
+        loading="eager"
+        src="/section_1/hero_bg__fog_2.webp"
         alt=""
         class="bg-image section-1"
         id="bg-4"
       />
       <img
-        src="/section_1/hero_bg__fog_3_left.png"
+        loading="eager"
+        src="/section_1/hero_bg__fog_3_left.webp"
         alt=""
         class="section-1 bg-image"
         id="bg-5"
-      />
+      />*/}
       <img
-        src="/section_1/hero_bg__fog_4_right.png"
+        loading="eager"
+        src="/section_1/hero_bg__fog_4_right.webp"
         alt=""
-        class="section-1 bg-image"
+        class="bg-image on-perspective"
         id="bg-6"
+        data-perspective-position="4"
       />
       <div id="backdrop"></div>
-      <div
+      <div class="cover" id="left"></div>
+      <div class="cover" id="right"></div>
+
+      {/* <div
         id="container-1"
         class=" w-full h-screen p-4 flex flex-col items-stretch justify-center text-white bg-transparent"
-      >
-        {/* <Design /> */}
-        <H1 />
-        <Text />
-        <CTA />
-      </div>
+      > */}
+      {/* <Design /> */}
+      <H1 />
+      <Text />
+      <CTA />
+      {/* </div> */}
     </section>
   );
 }
@@ -89,10 +127,11 @@ function H1() {
   return (
     <h1
       id="hero-heading"
-      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center lg:text-9xl whitespace-nowrap"
+      class="on-perspective absolute text-center lg:text-[13rem] whitespace-nowrap"
+      data-perspective-position="5"
     >
       <span class="mh:hidden tracking-tight">Shan Art</span>
-      &nbsp;
+      <br />
       <span class="mh:hidden tracking-tight">Advertising</span>
     </h1>
   );
@@ -100,7 +139,7 @@ function H1() {
 
 function Text() {
   return (
-    <div id="hero-content">
+    <div id="hero-content" class="on-perspective" data-perspective-position="6">
       <p class="mb-4">
         Best and the most popular advertising agency in Anuradhapura
       </p>
@@ -114,7 +153,7 @@ function Text() {
 
 function CTA() {
   return (
-    <div id="hero-cta" class="rounded-md">
+    <div id="hero-cta" class="on-perspective btn" data-perspective-position="7">
       <a href="tel:+94741288437" class="cursor-pointer">
         <p class="w-full h-full flex flex-col items-center justify-center text-2xl">
           Contact Us
@@ -131,6 +170,7 @@ function Photo() {
       style={"--width:200px;"}
     >
       <img
+        loading="eager"
         src=""
         alt=""
         class="aspect-square w-full h-auto bg-gray-100 rounded-md"

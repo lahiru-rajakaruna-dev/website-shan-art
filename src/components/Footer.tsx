@@ -1,12 +1,12 @@
 export default function Footer() {
   return (
     <footer class="bg-blue-950 text-white">
-      <div class="w-full h-fit p-4">
+      <div id="footer-container" class="w-full h-fit p-4">
         <a href="" class="mb-8">
           <img
             src=""
             alt="Shar Art Advertising Logo"
-            class="aspect-video w-full h-auto mb-8 bg-gray-400"
+            class="aspect-video w-[300px] h-auto mb-8 bg-gray-400"
           />
         </a>
         <div class="w-full h-fit flex flex-col items-stretch justify-start">
@@ -43,7 +43,10 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div class="w-full h-fit py-4 text-center border-y-2 border-emerald-600">
+      <div
+        id="website-author"
+        class="w-full h-fit py-4 text-center border-y-2 border-emerald-600 bg-black"
+      >
         <p>
           Designed & Developed by{" "}
           <a
